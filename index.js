@@ -1,61 +1,69 @@
 // Lets player choose the number of rounds to play
 const numOfRounds = +prompt('Choose the number of rounds you want to play:', '3');
 
-const options = [
+// options for computer, and also to check if user input is valid
+const options = Object.freeze([
     'rock',
     'paper',
     'scissors'
-];
+]);
 
-function getRandom(min, max) {
+function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
 
-    return Math.floor(Math.random() * (max - min)) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function rockPaperScissors() {
+function startGame() {
     // The main function that calls other functions 
     for(let i = 0; i < numOfRounds; i++) {
-        const userChoice = prompt('Choose rock, paper, or scissors', 'rock').toLowerCase();
-        const computerChoice = options[getRandom(0, 3)];
+        const playerSelection = prompt('Choose rock, paper, or scissors', 'rock').toLowerCase();
+        const computerSelection = options[getRandomInt(0, 2)];
 
-        if(!checkIfValidInput(userChoice)) return console.log('Invalid input, reload page to try again.')
+        // Check user's input
+        if(!checkIfValidInput(playerSelection)) return console.log('Invalid choice, reload page to try again.');
 
-        const winner = checkWinner(computerChoice, userChoice);
+        const winner = checkWinner(computerSelection, playerSelection);
     
-        console.log(`Computer played ${computerChoice}, you played ${userChoice}. ${winner} won!`);
+        if(winner === 'tie') {
+            console.log(`Computer played ${computerSelection}, player played ${playerSelection}. It is a tie.`);
+        }else {
+            console.log(`Computer played ${computerSelection}, player played ${playerSelection}. The ${winner} won!`);
+        }
     }
 }
 
-function checkWinner(computerChoice, userChoice) {
-    // If userChoice equals the string, then return player. Else, it exits the switch statement and returns computer
-    switch (computerChoice) {
+function checkWinner(computerSelection, playerSelection) {
+    // If the playerSelection === computerSelection, then it is a tie
+    if(playerSelection === computerSelection) return 'tie';
+
+    // If playerSelection === choice, then player is the winner
+    switch (computerSelection) {
         case 'rock':
-            if(userChoice === 'paper') return 'Player';
+            if(playerSelection === 'paper') return 'player';
             break;
 
         case 'paper':
-            if(userChoice === 'scissors') return 'Player';
+            if(playerSelection === 'scissors') return 'player';
             break;
 
         case 'scissors':
-            if(userChoice === 'rock') return 'Player';
-            break;
-    
-        default:
+            if(playerSelection === 'rock') return 'player';
             break;
     }
-
-    return 'Computer';
+    
+    // Return 'Computer' if computer is the winner 
+    return 'computer';
 }
 
 function checkIfValidInput(input) {
     // Checks if the user's input is a valid option by getting its index from global variable option;
     const index = options.indexOf(input);
 
+    // If index === -1, that means the user's choice is not valid. Otherwise, it is valid
     if(index !== -1) return true;
     return false;
 }
 
-rockPaperScissors();
+startGame();
