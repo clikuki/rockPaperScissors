@@ -1,0 +1,17 @@
+.choices {
+	height: 100px;
+	width: 100px;
+}
+
+.container {
+	display: flex;
+}
+
+.vertical {
+	flex-direction: column;
+}
+
+.center {
+	justify-content: center;
+	align-items: center;
+}

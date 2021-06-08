@@ -1,5 +1,4 @@
-// Lets player choose the number of rounds to play
-const numOfRounds = +prompt('Choose the number of rounds you want to play:', '3');
+const imageChoices = document.querySelectorAll('.choices');
 
 // options for computer, and also to check if user input is valid
 const options = Object.freeze([
@@ -8,6 +7,34 @@ const options = Object.freeze([
     'scissors'
 ]);
 
+const winCounter = {
+    player: 0,
+    computer: 0,
+}
+
+let anonFunc = e => {
+    startRound(e.target.id)
+}
+
+function setGame() {
+    winCounter.player = 0;
+    winCounter.computer = 0;
+
+    addEventListener();
+}
+
+function addEventListener() {
+    imageChoices.forEach(image => {
+        image.addEventListener('click', anonFunc)
+    })
+}
+
+function removeEventListener() {
+    imageChoices.forEach(image => {
+        image.removeEventListener('click', anonFunc)
+    })
+}
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -15,23 +42,44 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function startGame() {
-    // The main function that calls other functions 
-    for(let i = 0; i < numOfRounds; i++) {
-        const playerSelection = prompt('Choose rock, paper, or scissors', 'rock').toLowerCase();
-        const computerSelection = options[getRandomInt(0, 2)];
+function startRound(playerSelection) {
+    // The main function that calls other functions
+    const computerSelection = options[getRandomInt(0, 2)];
 
-        // Check user's input
-        if(!checkIfValidInput(playerSelection)) return console.log('Invalid choice, reload page to try again.');
+    // Check user's input
+    if(!checkIfValidInput(playerSelection)) return console.log('Invalid choice, reload page to try again.');
 
-        const winner = checkWinner(computerSelection, playerSelection);
-    
-        if(winner === 'tie') {
-            console.log(`Computer played ${computerSelection}, player played ${playerSelection}. It is a tie.`);
+    const winner = checkWinner(computerSelection, playerSelection);
+
+    if(winner === 'tie') {
+        console.log(`Computer played ${computerSelection}, player played ${playerSelection}. It is a tie.`);
+    }else {
+        if(winner === 'player') {
+            winCounter.player += 1;
         }else {
-            console.log(`Computer played ${computerSelection}, player played ${playerSelection}. The ${winner} won!`);
+            winCounter.computer += 1;
         }
+
+        console.log(`Computer played ${computerSelection}, player played ${playerSelection}. The ${winner} won this round!`);
     }
+
+    if(winCounter.player === 5 || winCounter.computer === 5) {
+        finishGame();
+    }
+}
+
+function finishGame() {
+    removeEventListener();
+
+    let winMessage = 'The game is finished! The winner is ';
+
+    if(winCounter.player === 5) {
+        winMessage += 'player!';
+    }else {
+        winMessage += 'computer!'
+    }
+
+    console.log(winMessage);
 }
 
 function checkWinner(computerSelection, playerSelection) {
@@ -66,4 +114,4 @@ function checkIfValidInput(input) {
     return false;
 }
 
-startGame();
+setGame();
