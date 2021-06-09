@@ -23,11 +23,10 @@ const scoreNeededToWin = 5;
 function setGame() {
     counter.playerWins = 0;
     counter.computerWins = 0;
-    numOfRounds = 0;
+    counter.numOfRounds = 0;
 
     resetWinDisplays();
-    
-    //roundWinMessageDisplay.textContent = '';
+    updateCounterDisplay();
 }
 
 function playRound(playerSelection) {
