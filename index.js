@@ -1,38 +1,77 @@
-const imageChoices = document.querySelectorAll('.choices');
+const roundWinMessageDisplay = document.querySelector('#roundWinMessageDisplay');
+const gameWinMessageDisplay = document.querySelector('#gameWinMessageDisplay');
+const imageChoices = document.querySelectorAll('#playerChoices > img');
+const counterDiv = document.querySelector('#counter');
+const computerCounter = counterDiv.querySelector('#computer');
+const playerCounter = counterDiv.querySelector('#player');
 
 // options for computer, and also to check if user input is valid
-const options = Object.freeze([
+const options = [
     'rock',
     'paper',
     'scissors'
-]);
+];
 
-const winCounter = {
-    player: 0,
-    computer: 0,
+const counter = {
+    playerWins: 0,
+    computerWins: 0,
+    numOfRounds: 0,
 }
 
-let anonFunc = e => {
-    startRound(e.target.id)
-}
+const scoreNeededToWin = 5;
 
 function setGame() {
-    winCounter.player = 0;
-    winCounter.computer = 0;
+    counter.playerWins = 0;
+    counter.computerWins = 0;
+    numOfRounds = 0;
 
-    addEventListener();
+    clearWinDisplays();
+    
+    roundWinMessageDisplay.textContent = '';
 }
 
-function addEventListener() {
-    imageChoices.forEach(image => {
-        image.addEventListener('click', anonFunc)
-    })
+function playRound(playerSelection) {
+    // The main function that calls other functions
+    const computerSelection = options[getRandomInt(0, 2)];
+
+    const winner = checkWinner(computerSelection, playerSelection);
+    
+    if(winner === 'player') {
+        counter.playerWins += 1;
+    }else if(winner === 'computer') {
+        counter.computerWins += 1;
+    }
+
+    updateRoundWinMessage(computerSelection, playerSelection, winner);
+    updateCounterDisplay();
+
+    if(counter.playerWins >= scoreNeededToWin || counter.computerWins >= scoreNeededToWin) {
+        displayGameWinMessage();
+    }
 }
 
-function removeEventListener() {
+// ===========================
+//      Helper Funcs
+// ===========================
+
+function clearWinDisplays() {
+    gameWinMessageDisplay.textContent = '';
+    roundWinMessageDisplay.textContent = '';
+}
+
+function addEventListeners() {
     imageChoices.forEach(image => {
-        image.removeEventListener('click', anonFunc)
+        image.addEventListener('click', e => {
+            counter.numOfRounds += 1;
+            if(counter.playerWins < scoreNeededToWin && counter.computerWins < scoreNeededToWin) {
+                playRound(e.target.id)
+            }
+        })
     })
+
+    document.querySelector('#resetGame').addEventListener('click', () => {
+        setGame();
+    });
 }
 
 function getRandomInt(min, max) {
@@ -42,76 +81,53 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function startRound(playerSelection) {
-    // The main function that calls other functions
-    const computerSelection = options[getRandomInt(0, 2)];
-
-    // Check user's input
-    if(!checkIfValidInput(playerSelection)) return console.log('Invalid choice, reload page to try again.');
-
-    const winner = checkWinner(computerSelection, playerSelection);
-
-    if(winner === 'tie') {
-        console.log(`Computer played ${computerSelection}, player played ${playerSelection}. It is a tie.`);
-    }else {
-        if(winner === 'player') {
-            winCounter.player += 1;
-        }else {
-            winCounter.computer += 1;
-        }
-
-        console.log(`Computer played ${computerSelection}, player played ${playerSelection}. The ${winner} won this round!`);
-    }
-
-    if(winCounter.player === 5 || winCounter.computer === 5) {
-        finishGame();
-    }
+function updateCounterDisplay() {
+    playerCounter.textContent = `Player : ${counter.playerWins}`;
+    computerCounter.textContent = `Computer : ${counter.computerWins}`;
 }
 
-function finishGame() {
-    removeEventListener();
+function updateRoundWinMessage(computerSelection, playerSelection, winner) {
+    let conculusion;
 
-    let winMessage = 'The game is finished! The winner is ';
-
-    if(winCounter.player === 5) {
-        winMessage += 'player!';
+    if(winner === 'tie') {
+        conculusion = 'It was a tie.'
     }else {
-        winMessage += 'computer!'
+        conculusion = `The ${winner} won this round!`
     }
 
-    console.log(winMessage);
+    let winMessage = `Computer played ${computerSelection}, You played ${playerSelection}. ${conculusion}`;
+
+    roundWinMessageDisplay.textContent = winMessage;
+}
+
+function displayGameWinMessage() {
+    let winner;
+
+    if(counter.playerWins >= scoreNeededToWin) {
+        winner = 'player';
+    }else {
+        winner = 'computer'
+    }
+
+    const winMessage = `The game is finished! The winner is ${winner}! There were a total of ${counter.numOfRounds} rounds!`;
+
+    gameWinMessageDisplay.textContent = winMessage;
 }
 
 function checkWinner(computerSelection, playerSelection) {
-    // If the playerSelection === computerSelection, then it is a tie
-    if(playerSelection === computerSelection) return 'tie';
+    switch (true) {
+        case playerSelection === computerSelection:
+            return 'tie';
 
-    // If playerSelection === choice, then player is the winner
-    switch (computerSelection) {
-        case 'rock':
-            if(playerSelection === 'paper') return 'player';
-            break;
+        case computerSelection === 'rock' && playerSelection === 'paper':
+        case computerSelection === 'paper' && playerSelection === 'scissors':
+        case computerSelection === 'scissors' && playerSelection === 'rock':
+            return 'player';
 
-        case 'paper':
-            if(playerSelection === 'scissors') return 'player';
-            break;
-
-        case 'scissors':
-            if(playerSelection === 'rock') return 'player';
-            break;
+        default:
+           return 'computer';
     }
-    
-    // Return 'Computer' if computer is the winner 
-    return 'computer';
 }
 
-function checkIfValidInput(input) {
-    // Checks if the user's input is a valid option by getting its index from global variable option;
-    const index = options.indexOf(input);
-
-    // If index === -1, that means the user's choice is not valid. Otherwise, it is valid
-    if(index !== -1) return true;
-    return false;
-}
-
+addEventListeners();
 setGame();

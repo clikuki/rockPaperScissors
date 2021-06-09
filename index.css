@@ -1,6 +1,13 @@
-.choices {
-	height: 100px;
-	width: 100px;
+html, body {
+	margin: 0;
+	padding: 0;
+	background-color: #dddddd;
+	font-family: monospace;
+	font-size: large;
+}
+
+main {
+	height: 50%;
 }
 
 .container {
@@ -14,4 +21,60 @@
 .center {
 	justify-content: center;
 	align-items: center;
+}
+
+.space-evenly {
+	justify-content: space-evenly;
+}
+
+/* ====================
+	ID styling
+==================== */
+
+#title {
+	margin: 0;
+}
+
+#playerChoices {
+	padding: 3px;
+	margin: 3px;
+	border: 3px solid black;
+	border-radius: 10px;
+}
+
+#playerChoices > img {
+	height: 100px;
+	width: 100px;
+	margin: 10px;
+	border: 2px solid black;
+	border-radius: 10px;
+}
+
+#counter {
+	width: 40%;
+	max-width: 50em;
+}
+
+#counter > span {
+	padding: 5px;
+}
+
+#resetGame {
+	font-size: larger;
+	border: 1px solid black;
+	border-radius: 5px;
+	box-shadow: 1px 1px 1px #444444;
+}
+
+#resetGame:hover {
+	box-shadow: 3px 3px 1px #444444;
+}
+
+#resetGame:focus-visible {
+	outline: none;
+}
+
+#credits {
+	padding: 5px;
+	font-size: x-small;
 }

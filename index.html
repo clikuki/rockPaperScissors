@@ -8,17 +8,23 @@
 </head>
 <body>
     <main class="container vertical center">
-        <div id="counter">
-            <span id="player">0</span>
-            <span id="separator">:</span>
-            <span id="computer">0</span>
+        <h1 id="title">Rock, Paper, Scissors!</h1>
+        <p id="gameWinMessageDisplay"></p>
+        <div id="counter" class="container space-evenly">
+            <span id="player">Player : 0</span>
+            <span id="computer">Computer : 0</span>
         </div>
-        <div id="playerChoices">
-            <img class="choices" id="rock" src="assets/rock.png">
-            <img class="choices" id="paper" src="assets/paper.png">
-            <img class="choices" id="scissors" src="assets/scissors.png">
+        <div id="playerChoices" class="container center">
+            <img id="rock" src="assets/rock_200x200.png">
+            <img id="paper" src="assets/paper_200x200.png">
+            <img id="scissors" src="assets/scissors_200x200.png">
         </div>
+        <p id="roundWinMessageDisplay"></p>
+        <button id="resetGame">Reset Game</button>
     </main>
+    <div id="credits" class="container center">
+        Site by: Clikuki
+    </div>
     <script src="index.js"></script>
 </body>
 </html>
