@@ -54,9 +54,7 @@ function playRound(playerSelection) {
 // ===========================
 
 function resetWinMessageDisplays() {
-    gameWinMessageDisplay.classList.add('invis');
-
-    gameWinMessageDisplay.textContent = 'dummy text';
+    gameWinMessageDisplay.textContent = 'Reach 5 points to win the game!';
     roundWinMessageDisplay.textContent = 'Click one of the 3 choices to start the game';
 }
 
@@ -110,9 +108,8 @@ function displayGameWinMessage() {
         winner = 'computer'
     }
 
-    const winMessage = `The game is finished! The winner is ${winner}! There were a total of ${counter.numOfRounds} rounds!`;
+    const winMessage = `After ${counter.numOfRounds} rounds, The first to reach 5 points is ${winner}!`;
 
-    gameWinMessageDisplay.classList.remove('invis');
     gameWinMessageDisplay.textContent = winMessage;
 }
 
