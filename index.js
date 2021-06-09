@@ -25,9 +25,9 @@ function setGame() {
     counter.computerWins = 0;
     numOfRounds = 0;
 
-    clearWinDisplays();
+    resetWinDisplays();
     
-    roundWinMessageDisplay.textContent = '';
+    //roundWinMessageDisplay.textContent = '';
 }
 
 function playRound(playerSelection) {
@@ -54,9 +54,11 @@ function playRound(playerSelection) {
 //      Helper Funcs
 // ===========================
 
-function clearWinDisplays() {
-    gameWinMessageDisplay.textContent = '';
-    roundWinMessageDisplay.textContent = '';
+function resetWinDisplays() {
+    gameWinMessageDisplay.classList.add('invis');
+
+    gameWinMessageDisplay.textContent = 'dummy text';
+    roundWinMessageDisplay.textContent = 'Click one of the 3 choices to start the game';
 }
 
 function addEventListeners() {
@@ -111,6 +113,7 @@ function displayGameWinMessage() {
 
     const winMessage = `The game is finished! The winner is ${winner}! There were a total of ${counter.numOfRounds} rounds!`;
 
+    gameWinMessageDisplay.classList.remove('invis');
     gameWinMessageDisplay.textContent = winMessage;
 }
 

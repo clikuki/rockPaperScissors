@@ -6,10 +6,10 @@
     <title>Document</title>
     <link rel="stylesheet" href="index.css">
 </head>
-<body>
+<body class="container vertical">
     <main class="container vertical center">
         <h1 id="title">Rock, Paper, Scissors!</h1>
-        <p id="gameWinMessageDisplay"></p>
+        <p id="gameWinMessageDisplay" class="invis"></p>
         <div id="counter" class="container space-evenly">
             <span id="player">Player : 0</span>
             <span id="computer">Computer : 0</span>
@@ -19,12 +19,12 @@
             <img id="paper" src="assets/paper_200x200.png">
             <img id="scissors" src="assets/scissors_200x200.png">
         </div>
-        <p id="roundWinMessageDisplay"></p>
+        <p id="roundWinMessageDisplay">Click one of the 3 choices to start the game</p>
         <button id="resetGame">Reset Game</button>
     </main>
-    <div id="credits" class="container center">
+    <p id="credits" class="container center grow">
         Site by: Clikuki
-    </div>
+    </p>
     <script src="index.js"></script>
 </body>
 </html>

@@ -1,13 +1,18 @@
 html, body {
 	margin: 0;
 	padding: 0;
-	background-color: #dddddd;
+	background-color: #eeeeee;
 	font-family: monospace;
 	font-size: large;
+	text-align: center;
 }
 
-main {
-	height: 50%;
+html{
+	height: 100%;
+}
+
+body{
+	min-height: 100%;
 }
 
 .container {
@@ -27,27 +32,47 @@ main {
 	justify-content: space-evenly;
 }
 
+.grow {
+	flex-grow: 1;
+}
+
+.invis {
+	visibility: hidden;
+}
+
 /* ====================
 	ID styling
 ==================== */
 
 #title {
-	margin: 0;
+	margin: 1em;
+}
+
+#gameWinMessageDisplay {
+	margin-top: 0;
 }
 
 #playerChoices {
+	max-width: fit-content;
+	min-width: 20px;
 	padding: 3px;
 	margin: 3px;
 	border: 3px solid black;
 	border-radius: 10px;
+	background-color: #dddddd;
 }
 
 #playerChoices > img {
-	height: 100px;
+	max-height: auto;
 	width: 100px;
 	margin: 10px;
 	border: 2px solid black;
 	border-radius: 10px;
+	box-shadow: 3px 3px 3px #999999;
+}
+
+#playerChoices > img:hover {
+	box-shadow: 3px 3px 3px #555555;
 }
 
 #counter {
@@ -76,5 +101,5 @@ main {
 
 #credits {
 	padding: 5px;
-	font-size: x-small;
+	font-size: small;
 }
