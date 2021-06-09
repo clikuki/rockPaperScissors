@@ -54,9 +54,7 @@ function playRound(playerSelection) {
 // ===========================
 
 function resetWinMessageDisplays() {
-    gameWinMessageDisplay.classList.add('invis');
-
-    gameWinMessageDisplay.textContent = 'dummy text';
+    gameWinMessageDisplay.textContent = 'Reach 5 points to win the game!';
     roundWinMessageDisplay.textContent = 'Click one of the 3 choices to start the game';
 }
 
@@ -88,15 +86,15 @@ function updateCounterDisplay() {
 }
 
 function updateRoundWinMessage(computerSelection, playerSelection, winner) {
-    let conculusion;
+    let winMessage = '';
 
     if(winner === 'tie') {
-        conculusion = 'It was a tie.'
+        winMessage = 'It was a tie.'
+    }else if(winner === 'player') {
+        winMessage = `Your ${playerSelection} beat the computer's ${computerSelection}!`
     }else {
-        conculusion = `The ${winner} won this round!`
+        winMessage = `The computer's ${computerSelection} beat your ${playerSelection}!`
     }
-
-    let winMessage = `Computer played ${computerSelection}, You played ${playerSelection}. ${conculusion}`;
 
     roundWinMessageDisplay.textContent = winMessage;
 }
@@ -110,9 +108,8 @@ function displayGameWinMessage() {
         winner = 'computer'
     }
 
-    const winMessage = `The game is finished! The winner is ${winner}! There were a total of ${counter.numOfRounds} rounds!`;
+    const winMessage = `After ${counter.numOfRounds} rounds, The first to reach 5 points is ${winner}!`;
 
-    gameWinMessageDisplay.classList.remove('invis');
     gameWinMessageDisplay.textContent = winMessage;
 }
 
