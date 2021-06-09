@@ -25,7 +25,7 @@ function setGame() {
     counter.computerWins = 0;
     counter.numOfRounds = 0;
 
-    resetWinDisplays();
+    resetWinMessageDisplays();
     updateCounterDisplay();
 }
 
@@ -53,7 +53,7 @@ function playRound(playerSelection) {
 //      Helper Funcs
 // ===========================
 
-function resetWinDisplays() {
+function resetWinMessageDisplays() {
     gameWinMessageDisplay.classList.add('invis');
 
     gameWinMessageDisplay.textContent = 'dummy text';
@@ -61,14 +61,14 @@ function resetWinDisplays() {
 }
 
 function addEventListeners() {
-    imageChoices.forEach(image => {
+    for(const image of imageChoices) {
         image.addEventListener('click', e => {
             counter.numOfRounds += 1;
             if(counter.playerWins < scoreNeededToWin && counter.computerWins < scoreNeededToWin) {
                 playRound(e.target.id)
             }
         })
-    })
+    }
 
     document.querySelector('#resetGame').addEventListener('click', () => {
         setGame();
