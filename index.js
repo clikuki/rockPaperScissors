@@ -150,6 +150,10 @@ function addMiscEventListeners() {
     })
     
     requiredScoreInput.addEventListener('input', () => {
+        while(!Number.isInteger(+requiredScoreInput.value)) {
+            requiredScoreInput.value = +requiredScoreInput.value * 10;
+        }
+
         if(+requiredScoreInput !== '') {
             requiredScoreInput.value = +requiredScoreInput.value;
         }
