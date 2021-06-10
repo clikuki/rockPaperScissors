@@ -80,7 +80,7 @@ button:hover {
 }
 
 #title {
-	margin: 1em;
+	margin: 1em .5em 1em .5em;
 }
 
 #gameWinMessageDisplay {
