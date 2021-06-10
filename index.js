@@ -68,7 +68,39 @@ function resetWinMessageDisplays() {
     roundWinMessageDisplay.textContent = 'Click one of the 3 choices to start the game';
 }
 
-function addImageEventListeners() {
+function addEventListeners() {
+    resetGame.addEventListener('click', () => {
+        setGame();
+    });
+    
+    submitRequiredScoreBtn.addEventListener('click', () => {
+        changeRequiredScore();
+    })
+    
+    requiredScoreInput.addEventListener('keydown', e => {
+        if(e.keyCode === 13) {
+            changeRequiredScore();
+        }
+    })
+    
+    requiredScoreInput.addEventListener('input', () => {
+        while(!Number.isInteger(+requiredScoreInput.value)) {
+            requiredScoreInput.value = +requiredScoreInput.value * 10;
+        }
+
+        if(+requiredScoreInput !== '') {
+            requiredScoreInput.value = +requiredScoreInput.value;
+        }
+
+        if(+requiredScoreInput.value > Number.MAX_SAFE_INTEGER) {
+            requiredScoreInput.value = Math.floor(+requiredScoreInput.value / 10);
+        }
+    
+        if(+requiredScoreInput.value <= 0) {
+            requiredScoreInput.value = Math.abs(+requiredScoreInput.value);
+        }
+    })
+
     for(const image of imageChoices) {
         image.addEventListener('click', e => {
             counter.numOfRounds += 1;
@@ -134,40 +166,5 @@ function checkWinner(computerSelection, playerSelection) {
     }
 }
 
-function addMiscEventListeners() {
-    resetGame.addEventListener('click', () => {
-        setGame();
-    });
-    
-    submitRequiredScoreBtn.addEventListener('click', () => {
-        changeRequiredScore();
-    })
-    
-    requiredScoreInput.addEventListener('keydown', e => {
-        if(e.keyCode === 13) {
-            changeRequiredScore();
-        }
-    })
-    
-    requiredScoreInput.addEventListener('input', () => {
-        while(!Number.isInteger(+requiredScoreInput.value)) {
-            requiredScoreInput.value = +requiredScoreInput.value * 10;
-        }
-
-        if(+requiredScoreInput !== '') {
-            requiredScoreInput.value = +requiredScoreInput.value;
-        }
-
-        if(+requiredScoreInput.value > Number.MAX_SAFE_INTEGER) {
-            requiredScoreInput.value = Math.floor(+requiredScoreInput.value / 10);
-        }
-    
-        if(+requiredScoreInput.value <= 0) {
-            requiredScoreInput.value = Math.abs(+requiredScoreInput.value);
-        }
-    })
-}
-
-addMiscEventListeners();
-addImageEventListeners();
+addEventListeners();
 setGame();
