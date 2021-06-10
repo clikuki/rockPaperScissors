@@ -1,5 +1,8 @@
 const roundWinMessageDisplay = document.querySelector('#roundWinMessageDisplay');
 const gameWinMessageDisplay = document.querySelector('#gameWinMessageDisplay');
+const requiredScoreInput = document.querySelector('#requiredScoreInput');
+const submitRequiredScoreBtn = document.querySelector('#submitRequiredScore');
+const resetGame = document.querySelector('#resetGame');
 const imageChoices = document.querySelectorAll('#playerChoices > img');
 const counterDiv = document.querySelector('#counter');
 const computerCounter = counterDiv.querySelector('#computer');
@@ -18,7 +21,7 @@ const counter = {
     numOfRounds: 0,
 }
 
-const scoreNeededToWin = 5;
+let requiredScore = 5;
 
 function setGame() {
     counter.playerWins = 0;
@@ -44,9 +47,16 @@ function playRound(playerSelection) {
     updateRoundWinMessage(computerSelection, playerSelection, winner);
     updateCounterDisplay();
 
-    if(counter.playerWins >= scoreNeededToWin || counter.computerWins >= scoreNeededToWin) {
+    if(counter.playerWins >= requiredScore || counter.computerWins >= requiredScore) {
         displayGameWinMessage();
     }
+}
+
+function changeRequiredScore() {
+    if(requiredScoreInput.value === '') return;
+
+    requiredScore = +requiredScoreInput.value;
+    setGame();
 }
 
 // ===========================
@@ -54,23 +64,19 @@ function playRound(playerSelection) {
 // ===========================
 
 function resetWinMessageDisplays() {
-    gameWinMessageDisplay.textContent = 'Reach 5 points to win the game!';
+    gameWinMessageDisplay.textContent = `Reach ${requiredScore} points to win the game!`;
     roundWinMessageDisplay.textContent = 'Click one of the 3 choices to start the game';
 }
 
-function addEventListeners() {
+function addImageEventListeners() {
     for(const image of imageChoices) {
         image.addEventListener('click', e => {
             counter.numOfRounds += 1;
-            if(counter.playerWins < scoreNeededToWin && counter.computerWins < scoreNeededToWin) {
+            if(counter.playerWins < requiredScore && counter.computerWins < requiredScore) {
                 playRound(e.target.id)
             }
         })
     }
-
-    document.querySelector('#resetGame').addEventListener('click', () => {
-        setGame();
-    });
 }
 
 function getRandomInt(min, max) {
@@ -102,13 +108,13 @@ function updateRoundWinMessage(computerSelection, playerSelection, winner) {
 function displayGameWinMessage() {
     let winner;
 
-    if(counter.playerWins >= scoreNeededToWin) {
+    if(counter.playerWins >= requiredScore) {
         winner = 'player';
     }else {
         winner = 'computer'
     }
 
-    const winMessage = `After ${counter.numOfRounds} rounds, The first to reach 5 points is ${winner}!`;
+    const winMessage = `After ${counter.numOfRounds} rounds, The first to reach ${requiredScore} points is ${winner}!`;
 
     gameWinMessageDisplay.textContent = winMessage;
 }
@@ -128,5 +134,36 @@ function checkWinner(computerSelection, playerSelection) {
     }
 }
 
-addEventListeners();
+function addMiscEventListeners() {
+    resetGame.addEventListener('click', () => {
+        setGame();
+    });
+    
+    submitRequiredScoreBtn.addEventListener('click', () => {
+        changeRequiredScore();
+    })
+    
+    requiredScoreInput.addEventListener('keydown', e => {
+        if(e.keyCode === 13) {
+            changeRequiredScore();
+        }
+    })
+    
+    requiredScoreInput.addEventListener('input', () => {
+        if(+requiredScoreInput !== '') {
+            requiredScoreInput.value = +requiredScoreInput.value;
+        }
+
+        if(+requiredScoreInput.value > Number.MAX_SAFE_INTEGER) {
+            requiredScoreInput.value = Math.floor(+requiredScoreInput.value / 10);
+        }
+    
+        if(+requiredScoreInput.value <= 0) {
+            requiredScoreInput.value = Math.abs(+requiredScoreInput.value);
+        }
+    })
+}
+
+addMiscEventListeners();
+addImageEventListeners();
 setGame();

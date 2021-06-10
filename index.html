@@ -9,7 +9,7 @@
 <body class="container vertical">
     <main class="container vertical center">
         <h1 id="title">Rock, Paper, Scissors!</h1>
-        <p id="gameWinMessageDisplay" >Reach 5 points to win the game!</p>
+        <p id="gameWinMessageDisplay" >Reach  points to win the game!</p>
         <div id="counter" class="container space-evenly">
             <span id="player">Player : 0</span>
             <span id="computer">Computer : 0</span>
@@ -21,6 +21,13 @@
         </div>
         <p id="roundWinMessageDisplay">Click one of the 3 choices to start the game</p>
         <button id="resetGame">Reset Game</button>
+        <div id="requiredScoreDiv">
+            <span id="scoreChangeExplanation">Change the required number of points to win</span>
+            <div>
+                <input id="requiredScoreInput" type="number" placeholder="5">
+                <button id="submitRequiredScore">Submit</button>
+            </div>
+        </div>
     </main>
     <div id="credits" class="container center grow">
         <p>Site by: <a href="https://github.com/clikuki" target="_blank">Clikuki</a></p>
