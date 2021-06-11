@@ -84,8 +84,8 @@ function addEventListeners() {
     })
     
     requiredScoreInput.addEventListener('input', () => {
-        while(!Number.isInteger(+requiredScoreInput.value)) {
-            requiredScoreInput.value = +requiredScoreInput.value * 10;
+        if(!Number.isInteger(+requiredScoreInput.value)) {
+            requiredScoreInput.value = +removeDot(requiredScoreInput.value);
         }
 
         if(+requiredScoreInput !== '') {
@@ -109,6 +109,13 @@ function addEventListeners() {
             }
         })
     }
+}
+
+function removeDot(string) {
+    const stringArray = string.split('');
+    const dotIndex = stringArray.indexOf('.');
+    
+    return [...stringArray.slice(0, dotIndex), ...stringArray.slice(dotIndex + 1, stringArray.length)].join('');
 }
 
 function getRandomInt(min, max) {

@@ -143,6 +143,10 @@ button:hover {
 	font-size: inherit;
 }
 
+#requiredScoreInput:focus-visible {
+	outline: none;
+}
+
 #submitRequiredScore {
 	font-size: inherit;
 }
