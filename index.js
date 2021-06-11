@@ -69,35 +69,15 @@ function resetWinMessageDisplays() {
 }
 
 function addEventListeners() {
-    resetGame.addEventListener('click', () => {
-        setGame();
-    });
+    resetGame.addEventListener('click', setGame);
     
-    submitRequiredScoreBtn.addEventListener('click', () => {
-        changeRequiredScore();
-    })
+    submitRequiredScoreBtn.addEventListener('click', changeRequiredScore)
+    
+    requiredScoreInput.addEventListener('input', validateRequiredScoreInput)
     
     requiredScoreInput.addEventListener('keydown', e => {
         if(e.keyCode === 13) {
             changeRequiredScore();
-        }
-    })
-    
-    requiredScoreInput.addEventListener('input', () => {
-        if(!Number.isInteger(+requiredScoreInput.value)) {
-            requiredScoreInput.value = +removeDot(requiredScoreInput.value);
-        }
-
-        if(+requiredScoreInput !== '') {
-            requiredScoreInput.value = +requiredScoreInput.value;
-        }
-
-        if(+requiredScoreInput.value > Number.MAX_SAFE_INTEGER) {
-            requiredScoreInput.value = Math.floor(+requiredScoreInput.value / 10);
-        }
-    
-        if(+requiredScoreInput.value <= 0) {
-            requiredScoreInput.value = Math.abs(+requiredScoreInput.value);
         }
     })
 
@@ -108,6 +88,24 @@ function addEventListeners() {
                 playRound(e.target.id)
             }
         })
+    }
+}
+
+function validateRequiredScoreInput() {
+    if(!Number.isInteger(+requiredScoreInput.value)) {
+        requiredScoreInput.value = +removeDot(requiredScoreInput.value);
+    }
+
+    if(+requiredScoreInput !== '') {
+        requiredScoreInput.value = +requiredScoreInput.value;
+    }
+
+    if(+requiredScoreInput.value > Number.MAX_SAFE_INTEGER) {
+        requiredScoreInput.value = Math.floor(+requiredScoreInput.value / 10);
+    }
+
+    if(+requiredScoreInput.value <= 0) {
+        requiredScoreInput.value = Math.abs(+requiredScoreInput.value);
     }
 }
 
